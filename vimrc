@@ -1,25 +1,36 @@
 set nocompatible        " We're running Vim, not Vi!
 filetype off
 
-set rtp+=~/.vim/bundle/vundle/
-call vundle#rc()
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
 
-Bundle 'gmarik/vundle'
-Bundle 'Lokaltog/vim-easymotion'
-Bundle 'tpope/vim-rails'
-Bundle 'FuzzyFinder'
-Bundle 'scrooloose/nerdtree'
-Bundle 'scrooloose/nerdcommenter'
-Bundle 'taglist.vim'
-Bundle 'surround.vim'
-Bundle 'L9'
-Bundle 'othree/xml.vim'
-Bundle 'othree/html5.vim'
+Plugin 'VundleVim/Vundle.vim'
+Plugin 'Lokaltog/vim-easymotion'
+Plugin 'tpope/vim-rails'
+Plugin 'FuzzyFinder'
+Plugin 'scrooloose/nerdtree'
+Plugin 'scrooloose/nerdcommenter'
+Plugin 'taglist.vim'
+Plugin 'surround.vim'
+Plugin 'L9'
+Plugin 'othree/xml.vim'
+Plugin 'othree/html5.vim'
+Plugin 'kchmck/vim-coffee-script'
+Plugin 'nono/vim-handlebars'
+Plugin 'groenewege/vim-less'
+Plugin 'lepture/vim-css'
+Plugin 'digitaltoad/vim-jade'
+Plugin 'pangloss/vim-javascript'
+Plugin 'hashivim/vim-terraform'
+
+call vundle#end()
+filetype indent on      " Enable filetype-specific indenting
+filetype plugin on      " Enable filetype-specific plugins
 
 filetype on             " Enable filetype detection
 syntax on               " Enable syntax highlighting
-filetype indent on      " Enable filetype-specific indenting
-filetype plugin on      " Enable filetype-specific plugins
+
+set smartcase
 set smarttab
 set ic sc
 set history=1000        " Number of things to remember in history. 
@@ -27,7 +38,6 @@ set autowrite           " Writes on make/shell commands
 set t_Co=256            " 256bit color
 set hidden
 set expandtab
-set tabstop=2 shiftwidth=2 softtabstop=2
 set wildmode=list:longest
 set ruler
 set autoindent
@@ -36,9 +46,11 @@ set nu
 set ruler
 set go+=b               " Enable horizonal scrollbar.
 let mapleader = ","
+let g:EasyMotion_leader_key = '<Leader>'
 set guifont=Anonymous\ Pro:h13
 set switchbuf=useopen
 set hlsearch
+set backspace=2
 
 " Folding stuff
 hi Folded guibg=red guifg=Red cterm=bold ctermbg=DarkGrey ctermfg=lightblue
@@ -65,9 +77,19 @@ fu! ToggleFold()
    echo
 endf
 
+fu! StripWhitespace()
+    :%s/\s\+$//e
+endf
+
 colorscheme vividchalk
 
-au BufRead,BufNewFile *.rabl setf ruby " Add RABL (ruby gem) syntax support (maps to ruby)
+au BufRead,BufNewFile *.rabl set filetype=ruby
+au BufNewFile,BufReadPost *.coffee setl foldmethod=indent shiftwidth=2 expandtab
+au BufNewFile,BufRead *.raml set filetype=yaml
+au FileType * set tabstop=4|set shiftwidth=4
+au FileType ruby set tabstop=2|set shiftwidth=2
+au FileType javascript set tabstop=2|set shiftwidth=2
+au FileType yaml set tabstop=2|set shiftwidth=2
 
 highlight clear Search
 highlight Search term=reverse cterm=bold ctermbg=4 guifg=white guibg=hotpink1
